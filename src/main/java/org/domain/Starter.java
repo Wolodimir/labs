@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 public class Starter {
     public static void main(String[] args) throws DuplicateModelNameException {
-        //carTests();
-        motorbikeTests();
+        carTests();
+        //motorbikeTests();
     }
 
     public static void motorbikeTests() throws DuplicateModelNameException {
@@ -17,9 +17,14 @@ public class Starter {
         motorbike.addModel("F3", 30000.0);
         motorbike.addModel("F4", 40000.0);
         motorbike.removeModelByName("F2");
-        motorbike.getAllModelsNames();
-        motorbike.getAllModelsPrices();
+        motorbike.getAllModelNames();
+        motorbike.getAllModelPrices();
+
+        System.out.println(VehicleUtils.avgVehiclePrice(motorbike));
+
         System.out.println("hah");
+
+        VehicleUtils.displayVehicleModelsRow(motorbike);
     }
 
     public static void carTests() {
@@ -28,17 +33,20 @@ public class Starter {
         car.addModel("oktavia", 10000.0);
         car.addModel("oktavia2", 10000.0);
 
-        System.out.println(Arrays.toString(car.getAllModelsNames()));
-        System.out.println(Arrays.toString(car.getAllModelsPrices()));
+        System.out.println(Arrays.toString(car.getAllModelNames()));
+        System.out.println(Arrays.toString(car.getAllModelPrices()));
         car.changePriceByModelName("oktavia", 99999.0);
         System.out.println(car.getPriceByModelName("oktavia"));
 
 
         car.removeModelByName("oktavia");
         car.removeModelByName("Model № 8");
-        System.out.println(Arrays.toString(car.getAllModelsNames()));
-        System.out.println(Arrays.toString(car.getAllModelsPrices()));
-        car.changePriceByModelName("oktavia2", 8888888888.0);
+        System.out.println(Arrays.toString(car.getAllModelNames()));
+        System.out.println(Arrays.toString(car.getAllModelPrices()));
+        car.changePriceByModelName("oktavia2", 888888.0);
         System.out.println(car.getPriceByModelName("oktavia2"));
+
+        System.out.println(VehicleUtils.avgVehiclePrice(car));
+        VehicleUtils.displayVehicleModelsRow(car);
     }
 }

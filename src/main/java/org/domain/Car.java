@@ -1,5 +1,7 @@
 package org.domain;
 
+import org.domain.exception.ModelPriceOutOfBoundsException;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -35,6 +37,9 @@ public class Car implements Vehicle{
 
     @Override
     public void addModel(String name, Double price) {
+        if (price > 1000000 || price < 10000) {
+            throw new ModelPriceOutOfBoundsException(price);
+        }
         Model model = new Model(name, price);
         this.models = Arrays.copyOf(this.models, this.models.length + 1);
         this.models[this.models.length - 1] = model;
@@ -42,6 +47,9 @@ public class Car implements Vehicle{
 
     @Override
     public void changePriceByModelName(String modelName, Double price) {
+        if (price > 1000000 || price < 10000) {
+            throw new ModelPriceOutOfBoundsException(price);
+        }
         this.models[getModelIndexByName(modelName)].setPrice(price);
     }
 
@@ -51,7 +59,7 @@ public class Car implements Vehicle{
     }
 
     @Override
-    public Double[] getAllModelsPrices() {
+    public Double[] getAllModelPrices() {
         Double[] prices = new Double[this.models.length];
         for (int i = 0; i < this.models.length; i++) {
             prices[i] = this.models[i].getPrice();
@@ -60,12 +68,22 @@ public class Car implements Vehicle{
     }
 
     @Override
-    public String[] getAllModelsNames() {
+    public String[] getAllModelNames() {
         String[] names = new String[this.models.length];
         for (int i = 0; i < this.models.length; i++) {
             names[i] = this.models[i].getName();
         }
         return names;
+    }
+
+    @Override
+    public Integer getModelQuantity() {
+        return this.models.length;
+    }
+
+    @Override
+    public String getBrand() {
+        return brand;
     }
 
     private Integer getModelIndexByName(String name) {
@@ -74,10 +92,6 @@ public class Car implements Vehicle{
                 return i;
         }
         throw new RuntimeException("There is no model named [" + name + "]");
-    }
-
-    public String getBrand() {
-        return brand;
     }
 
     public void setBrand(String brand) {

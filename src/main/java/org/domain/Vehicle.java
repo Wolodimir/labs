@@ -12,8 +12,12 @@ public interface Vehicle {
 
     Double getPriceByModelName(String modelName);
 
-    Double[] getAllModelsPrices();
+    Double[] getAllModelPrices();
 
-    String[] getAllModelsNames();
+    String[] getAllModelNames();
+
+    Integer getModelQuantity();
+
+    String getBrand();
 
 }

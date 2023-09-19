@@ -83,7 +83,7 @@ public class Motorbike implements Vehicle{
     }
 
     @Override
-    public Double[] getAllModelsPrices() {
+    public Double[] getAllModelPrices() {
         Double[] prices = new Double[this.size];
         Model model = this.head.next;
         for (int i = 0; i < this.size; i++) {
@@ -94,7 +94,7 @@ public class Motorbike implements Vehicle{
     }
 
     @Override
-    public String[] getAllModelsNames() {
+    public String[] getAllModelNames() {
         String[] names = new String[this.size];
         Model model = this.head.next;
         for (int i = 0; i < this.size; i++) {
@@ -102,6 +102,16 @@ public class Motorbike implements Vehicle{
             model = model.next;
         }
         return names;
+    }
+
+    @Override
+    public Integer getModelQuantity() {
+        return this.size;
+    }
+
+    @Override
+    public String getBrand() {
+        return this.brand;
     }
 
     private Model getModelByName(String modelName) {
