@@ -1,16 +1,21 @@
 package org.domain;
 
+import org.domain.exception.DuplicateModelNameException;
+
 import java.util.Arrays;
 
 public class Starter {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DuplicateModelNameException {
         //carTests();
         motorbikeTests();
     }
 
-    public static void motorbikeTests() {
+    public static void motorbikeTests() throws DuplicateModelNameException {
         Motorbike motorbike = new Motorbike("Ducatti");
-        motorbike.addModel("F1", 1000.0);
+        motorbike.addModel("F1", 10000.0);
+        motorbike.addModel("F2", 20000.0);
+        motorbike.addModel("F3", 30000.0);
+        motorbike.addModel("F4", 40000.0);
         System.out.println("hah");
     }
 

@@ -29,11 +29,11 @@ public class Motorbike implements Vehicle{
     }
 
     @Override
-    public void addModel(String name, Double price) {
+    public void addModel(String name, Double price) throws DuplicateModelNameException {
         if (getModelByName(name) != null) {
-            //throw new DuplicateModelNameException(name);
+            throw new DuplicateModelNameException(name);
         } else if (price > 1000000 || price < 10000) {
-            //throw new ModelPriceOutOfBoundsException(price);
+            throw new ModelPriceOutOfBoundsException(price);
         }
         if (this.head.next == null) {
             System.out.println("List is empty");
@@ -47,6 +47,7 @@ public class Motorbike implements Vehicle{
             newModel.prev = lastModel;
             this.head.prev = newModel;
             this.size++;
+            this.lastModified = new Date().getTime();
         }
     }
 
