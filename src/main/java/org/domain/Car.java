@@ -6,15 +6,15 @@ import org.domain.exception.NoSuchModelNameException;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Car implements Vehicle{
+public class Car implements Vehicle {
 
     private String brand;
     private Model[] models;
 
     public Car(String brand, int modelArrayLength) {
         this.models = new Model[modelArrayLength];
-        for(int i = 0; i < modelArrayLength; i++) {
-            Model model = new Model("Model № " + i,Math.random() * 1000000 );
+        for (int i = 0; i < modelArrayLength; i++) {
+            Model model = new Model("Model № " + i, Math.random() * 1000000);
             models[i] = model;
         }
         this.brand = brand;
@@ -31,7 +31,7 @@ public class Car implements Vehicle{
         Objects.checkIndex(i, size);
         int newSize = size - 1;
 
-        Model [] tempModels =  Arrays.copyOf(this.models, newSize);
+        Model[] tempModels = Arrays.copyOf(this.models, newSize);
         System.arraycopy(this.models, i + 1, tempModels, i, newSize - i);
         this.models = tempModels;
     }

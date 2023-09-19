@@ -7,12 +7,13 @@ import org.domain.exception.NoSuchModelNameException;
 import java.util.Date;
 import java.util.Objects;
 
-public class Motorbike implements Vehicle{
+public class Motorbike implements Vehicle {
 
     private String brand;
     private Integer size = 0;
     private Long lastModified;
     private Model head = new Model();
+
     {
         this.head.prev = head;
         this.head.next = head;

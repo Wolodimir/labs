@@ -9,7 +9,7 @@ public class VehicleUtils {
         for (int i = 0; i < quantity; i++) {
             sum += prices[i];
         }
-        return sum/quantity;
+        return sum / quantity;
     }
 
     public static void displayVehicleModelsRow(Vehicle vehicle) {
