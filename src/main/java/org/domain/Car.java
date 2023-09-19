@@ -1,6 +1,7 @@
 package org.domain;
 
 import org.domain.exception.ModelPriceOutOfBoundsException;
+import org.domain.exception.NoSuchModelNameException;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -24,7 +25,7 @@ public class Car implements Vehicle{
     }
 
     @Override
-    public void removeModelByName(String name) {
+    public void removeModelByName(String name) throws NoSuchModelNameException {
         int i = getModelIndexByName(name);
         int size = this.models.length;
         Objects.checkIndex(i, size);
@@ -46,7 +47,7 @@ public class Car implements Vehicle{
     }
 
     @Override
-    public void changePriceByModelName(String modelName, Double price) {
+    public void changePriceByModelName(String modelName, Double price) throws NoSuchModelNameException {
         if (price > 1000000 || price < 10000) {
             throw new ModelPriceOutOfBoundsException(price);
         }
@@ -54,7 +55,7 @@ public class Car implements Vehicle{
     }
 
     @Override
-    public Double getPriceByModelName(String modelName) {
+    public Double getPriceByModelName(String modelName) throws NoSuchModelNameException {
         return this.models[getModelIndexByName(modelName)].getPrice();
     }
 
@@ -86,12 +87,12 @@ public class Car implements Vehicle{
         return brand;
     }
 
-    private Integer getModelIndexByName(String name) {
+    private Integer getModelIndexByName(String name) throws NoSuchModelNameException {
         for (int i = 0; i < this.models.length; i++) {
             if (name.equals(this.models[i].getName()))
                 return i;
         }
-        throw new RuntimeException("There is no model named [" + name + "]");
+        throw new NoSuchModelNameException(name);
     }
 
     public void setBrand(String brand) {

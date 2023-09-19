@@ -1,16 +1,17 @@
 package org.domain;
 
 import org.domain.exception.DuplicateModelNameException;
+import org.domain.exception.NoSuchModelNameException;
 
 import java.util.Arrays;
 
 public class Starter {
-    public static void main(String[] args) throws DuplicateModelNameException {
+    public static void main(String[] args) throws DuplicateModelNameException, NoSuchModelNameException {
         carTests();
-        //motorbikeTests();
+        motorbikeTests();
     }
 
-    public static void motorbikeTests() throws DuplicateModelNameException {
+    public static void motorbikeTests() throws DuplicateModelNameException, NoSuchModelNameException {
         Motorbike motorbike = new Motorbike("Ducatti");
         motorbike.addModel("F1", 10000.0);
         motorbike.addModel("F2", 20000.0);
@@ -27,7 +28,7 @@ public class Starter {
         VehicleUtils.displayVehicleModelsRow(motorbike);
     }
 
-    public static void carTests() {
+    public static void carTests() throws NoSuchModelNameException {
         Car car = new Car("Skoda", 11);
         car.addModel("oktavia1", 10000.0);
         car.addModel("oktavia", 10000.0);

@@ -1,16 +1,17 @@
 package org.domain;
 
 import org.domain.exception.DuplicateModelNameException;
+import org.domain.exception.NoSuchModelNameException;
 
 public interface Vehicle {
 
-    void removeModelByName(String name);
+    void removeModelByName(String name) throws NoSuchModelNameException;
 
     void addModel(String name, Double price) throws DuplicateModelNameException;
 
-    void changePriceByModelName(String modelName, Double price);
+    void changePriceByModelName(String modelName, Double price) throws NoSuchModelNameException;
 
-    Double getPriceByModelName(String modelName);
+    Double getPriceByModelName(String modelName) throws NoSuchModelNameException;
 
     Double[] getAllModelPrices();
 

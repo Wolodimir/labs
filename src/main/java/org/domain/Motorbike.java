@@ -2,6 +2,7 @@ package org.domain;
 
 import org.domain.exception.DuplicateModelNameException;
 import org.domain.exception.ModelPriceOutOfBoundsException;
+import org.domain.exception.NoSuchModelNameException;
 
 import java.util.Date;
 import java.util.Objects;
@@ -23,10 +24,10 @@ public class Motorbike implements Vehicle{
     }
 
     @Override
-    public void removeModelByName(String name) {
+    public void removeModelByName(String name) throws NoSuchModelNameException {
         Model model = getModelByName(name);
         if (model == null) {
-            throw new RuntimeException("There is no model named " + name);
+            throw new NoSuchModelNameException(name);
         }
         Model prev = model.prev;
         Model next = model.next;
@@ -61,23 +62,23 @@ public class Motorbike implements Vehicle{
     }
 
     @Override
-    public void changePriceByModelName(String modelName, Double price) {
+    public void changePriceByModelName(String modelName, Double price) throws NoSuchModelNameException {
         if (price > 1000000 || price < 10000) {
             throw new ModelPriceOutOfBoundsException(price);
         }
         Model model = getModelByName(modelName);
         if (model == null) {
-            throw new RuntimeException("There is no model named " + modelName);
+            throw new NoSuchModelNameException(modelName);
         }
         model.price = price;
         this.lastModified = new Date().getTime();
     }
 
     @Override
-    public Double getPriceByModelName(String modelName) {
+    public Double getPriceByModelName(String modelName) throws NoSuchModelNameException {
         Model model = getModelByName(modelName);
         if (model == null) {
-            throw new RuntimeException("There is no model named " + modelName);
+            throw new NoSuchModelNameException(modelName);
         }
         return model.price;
     }
