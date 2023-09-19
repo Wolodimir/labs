@@ -16,6 +16,9 @@ public class Starter {
         motorbike.addModel("F2", 20000.0);
         motorbike.addModel("F3", 30000.0);
         motorbike.addModel("F4", 40000.0);
+        motorbike.removeModelByName("F2");
+        motorbike.getAllModelsNames();
+        motorbike.getAllModelsPrices();
         System.out.println("hah");
     }
 

@@ -3,7 +3,6 @@ package org.domain;
 import org.domain.exception.DuplicateModelNameException;
 import org.domain.exception.ModelPriceOutOfBoundsException;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -25,7 +24,17 @@ public class Motorbike implements Vehicle{
 
     @Override
     public void removeModelByName(String name) {
+        Model model = getModelByName(name);
+        if (model == null) {
+            throw new RuntimeException("There is no model named " + name);
+        }
+        Model prev = model.prev;
+        Model next = model.next;
 
+        prev.next = model.next;
+        next.prev = model.prev;
+        this.size--;
+        this.lastModified = new Date().getTime();
     }
 
     @Override
@@ -40,10 +49,10 @@ public class Motorbike implements Vehicle{
         } else {
             Model lastModel = this.head.prev;
             Model newModel = new Model();
-            newModel.modelName = name;
+            newModel.name = name;
             newModel.price = price;
             lastModel.next = newModel;
-            newModel.next = head;
+            newModel.next = this.head;
             newModel.prev = lastModel;
             this.head.prev = newModel;
             this.size++;
@@ -53,31 +62,55 @@ public class Motorbike implements Vehicle{
 
     @Override
     public void changePriceByModelName(String modelName, Double price) {
-
+        if (price > 1000000 || price < 10000) {
+            throw new ModelPriceOutOfBoundsException(price);
+        }
+        Model model = getModelByName(modelName);
+        if (model == null) {
+            throw new RuntimeException("There is no model named " + modelName);
+        }
+        model.price = price;
+        this.lastModified = new Date().getTime();
     }
 
     @Override
     public Double getPriceByModelName(String modelName) {
-        return null;
+        Model model = getModelByName(modelName);
+        if (model == null) {
+            throw new RuntimeException("There is no model named " + modelName);
+        }
+        return model.price;
     }
 
     @Override
     public Double[] getAllModelsPrices() {
-        return new Double[0];
+        Double[] prices = new Double[this.size];
+        Model model = this.head.next;
+        for (int i = 0; i < this.size; i++) {
+            prices[i] = model.price;
+            model = model.next;
+        }
+        return prices;
     }
 
     @Override
     public String[] getAllModelsNames() {
-        return new String[0];
+        String[] names = new String[this.size];
+        Model model = this.head.next;
+        for (int i = 0; i < this.size; i++) {
+            names[i] = model.name;
+            model = model.next;
+        }
+        return names;
     }
 
     private Model getModelByName(String modelName) {
-        if (Objects.equals(this.head.modelName, modelName)) {
+        if (Objects.equals(this.head.name, modelName)) {
             return this.head;
         }
-        Model model = head;
-        while (model.next != head) {
-            if (Objects.equals(model.next.modelName, modelName)) {
+        Model model = this.head;
+        while (model.next != this.head) {
+            if (Objects.equals(model.next.name, modelName)) {
                 return model.next;
             }
             model = model.next;
@@ -86,7 +119,7 @@ public class Motorbike implements Vehicle{
     }
 
     private class Model {
-        String modelName = null;
+        String name = null;
         Double price = Double.NaN;
         Model prev = null;
         Model next = null;
