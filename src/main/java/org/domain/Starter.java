@@ -7,12 +7,44 @@ import java.util.Arrays;
 
 public class Starter {
     public static void main(String[] args) throws DuplicateModelNameException, NoSuchModelNameException {
-        carTests();
-        motorbikeTests();
+        //carTests();
+        //motorbikeTests();
+        //newMotorbikeTests();
+        newCarTests();
+    }
+
+    public static void newMotorbikeTests() throws DuplicateModelNameException, NoSuchModelNameException {
+        Motorbike motorbike = new Motorbike("Yamaha", 10);
+        VehicleUtils.displayVehicleModelsRow(motorbike);
+
+        motorbike.removeModelByName("Model № 5");
+        motorbike.changeModelName("Model № 8", "UUUH TI KAKOOOI");
+        VehicleUtils.displayVehicleModelsRow(motorbike);
+
+        //Exceptions
+        //motorbike.changeModelName("THERE-IS-NO-MODEL", "UUUH TI KAKOOOI");
+        //motorbike.changePriceByModelName("UUUH TI KAKOOOI", 0.0);
+        //motorbike.changeModelName("Model № 8", "Model № 4");
+
+    }
+
+    public static void newCarTests() throws DuplicateModelNameException, NoSuchModelNameException {
+        Car motorbike = new Car("Skoda", 10);
+        VehicleUtils.displayVehicleModelsRow(motorbike);
+
+        motorbike.removeModelByName("Model № 5");
+        motorbike.changeModelName("Model № 8", "Model № 4");
+        VehicleUtils.displayVehicleModelsRow(motorbike);
+
+        //Exceptions
+        //motorbike.changeModelName("THERE-IS-NO-MODEL", "UUUH TI KAKOOOI");
+        //motorbike.changePriceByModelName("UUUH TI KAKOOOI", 0.0);
+        //motorbike.changeModelName("Model № 8", "Model № 4");
+
     }
 
     public static void motorbikeTests() throws DuplicateModelNameException, NoSuchModelNameException {
-        Motorbike motorbike = new Motorbike("Ducatti");
+        Motorbike motorbike = new Motorbike("Ducatti", 10);
         motorbike.addModel("F1", 10000.0);
         motorbike.addModel("F2", 20000.0);
         motorbike.addModel("F3", 30000.0);
@@ -23,7 +55,7 @@ public class Starter {
 
         System.out.println(VehicleUtils.avgVehiclePrice(motorbike));
 
-        System.out.println("hah");
+        System.out.println("----------");
 
         VehicleUtils.displayVehicleModelsRow(motorbike);
     }

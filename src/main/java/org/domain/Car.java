@@ -1,5 +1,6 @@
 package org.domain;
 
+import org.domain.exception.DuplicateModelNameException;
 import org.domain.exception.ModelPriceOutOfBoundsException;
 import org.domain.exception.NoSuchModelNameException;
 
@@ -25,15 +26,23 @@ public class Car implements Vehicle {
     }
 
     @Override
+    public void changeModelName(String currentName, String newName) throws NoSuchModelNameException, DuplicateModelNameException {
+        try {
+            getModelIndexByName(newName);
+            throw new DuplicateModelNameException(newName);
+        } catch (NoSuchModelNameException e) {
+            this.models[getModelIndexByName(currentName)].setName(newName);
+        }
+    }
+
+    @Override
     public void removeModelByName(String name) throws NoSuchModelNameException {
         int i = getModelIndexByName(name);
         int size = this.models.length;
         Objects.checkIndex(i, size);
-        int newSize = size - 1;
 
-        Model[] tempModels = Arrays.copyOf(this.models, newSize);
-        System.arraycopy(this.models, i + 1, tempModels, i, newSize - i);
-        this.models = tempModels;
+        System.arraycopy(this.models, i + 1, this.models, i, size - i - 1);
+        this.models = Arrays.copyOf(this.models, size -1);
     }
 
     @Override
@@ -87,16 +96,17 @@ public class Car implements Vehicle {
         return brand;
     }
 
+    @Override
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
     private Integer getModelIndexByName(String name) throws NoSuchModelNameException {
         for (int i = 0; i < this.models.length; i++) {
             if (name.equals(this.models[i].getName()))
                 return i;
         }
         throw new NoSuchModelNameException(name);
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
     }
 
     private class Model {

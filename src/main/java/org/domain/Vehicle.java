@@ -5,6 +5,8 @@ import org.domain.exception.NoSuchModelNameException;
 
 public interface Vehicle {
 
+    void changeModelName(String currentName, String newName) throws NoSuchModelNameException, DuplicateModelNameException;
+
     void removeModelByName(String name) throws NoSuchModelNameException;
 
     void addModel(String name, Double price) throws DuplicateModelNameException;
@@ -20,5 +22,7 @@ public interface Vehicle {
     Integer getModelQuantity();
 
     String getBrand();
+
+    void setBrand(String brand);
 
 }

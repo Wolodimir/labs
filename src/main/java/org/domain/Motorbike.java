@@ -17,10 +17,27 @@ public class Motorbike implements Vehicle {
     {
         this.head.prev = head;
         this.head.next = head;
+        this.lastModified = new Date().getTime();
     }
 
-    public Motorbike(String brand) {
+    public Motorbike(String brand, int modelArrayLength) throws DuplicateModelNameException {
         this.brand = brand;
+
+        for (int i = 0; i < modelArrayLength; i++) {
+            this.addModel("Model № " + i, Math.random() * 1000000);
+        }
+    }
+
+    @Override
+    public void changeModelName(String currentName, String newName) throws NoSuchModelNameException, DuplicateModelNameException {
+        if (getModelByName(newName) != null) {
+            throw new DuplicateModelNameException(newName);
+        }
+        Model model = getModelByName(currentName);
+        if (model == null) {
+            throw new NoSuchModelNameException(currentName);
+        }
+        model.name = newName;
         this.lastModified = new Date().getTime();
     }
 
@@ -114,6 +131,11 @@ public class Motorbike implements Vehicle {
     @Override
     public String getBrand() {
         return this.brand;
+    }
+
+    @Override
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     private Model getModelByName(String modelName) {
